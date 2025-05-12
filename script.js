@@ -1,34 +1,37 @@
 function convertToRoman(num) {
-  if (num <= 0 || num > 3999) return "Input must be between 1 and 3999";
+  if (num === 0) return "N/A"; // Romans had no symbol for 0
+  if (num > 3999) return "Value too large"; // Limited by symbol list
 
-  const romanNumerals = [
-    { value: 1000, symbol: "M" },
-    { value: 900,  symbol: "CM" },
-    { value: 500,  symbol: "D" },
-    { value: 400,  symbol: "CD" },
-    { value: 100,  symbol: "C" },
-    { value: 90,   symbol: "XC" },
-    { value: 50,   symbol: "L" },
-    { value: 40,   symbol: "XL" },
-    { value: 10,   symbol: "X" },
-    { value: 9,    symbol: "IX" },
-    { value: 5,    symbol: "V" },
-    { value: 4,    symbol: "IV" },
-    { value: 1,    symbol: "I" }
+  const romanMap = [
+    ["M", 1000],
+    ["CM", 900],
+    ["D", 500],
+    ["CD", 400],
+    ["C", 100],
+    ["XC", 90],
+    ["L", 50],
+    ["XL", 40],
+    ["X", 10],
+    ["IX", 9],
+    ["V", 5],
+    ["IV", 4],
+    ["I", 1],
   ];
 
   let result = "";
 
-  for (let i = 0; i < romanNumerals.length; i++) {
-    while (num >= romanNumerals[i].value) {
-      result += romanNumerals[i].symbol;
-      num -= romanNumerals[i].value;
+  for (let [symbol, value] of romanMap) {
+    while (num >= value) {
+      result += symbol;
+      num -= value;
     }
   }
 
   return result;
 }
 
-// Example usage:
-console.log(convertToRoman(14));   // XIV
-console.log(convertToRoman(798));  // DCCXCVIII
+// Example test cases:
+console.log(convertToRoman(14));    // XIV
+console.log(convertToRoman(798));   // DCCXCVIII
+console.log(convertToRoman(0));     // N/A
+console.log(convertToRoman(100000)) // Value too large
